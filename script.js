@@ -1,37 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Mobile Menu Toggle ---
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinksContainer = document.querySelector('.nav-links');
-    const navLinks = document.querySelectorAll('.nav-links a'); // Select individual links
+    // Navigation Toggle for Mobile
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const links = document.querySelectorAll('.nav-links li');
 
-    if (mobileToggle && navLinksContainer) {
-        // Toggle menu on button click
-        mobileToggle.addEventListener('click', () => {
-            navLinksContainer.classList.toggle('mobile-active');
-            
-            // Optional: Toggle icon between bars and X
-            const icon = mobileToggle.querySelector('i');
-            if(navLinksContainer.classList.contains('mobile-active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        // Close menu when a link is clicked
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navLinksContainer.classList.remove('mobile-active');
-                
-                // Reset icon
-                const icon = mobileToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            });
-        });
-    }
+    hamburger.addEventListener('click', () => {
+        // Toggle Nav
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
 
         // Animate Links
         links.forEach((link, index) => {
@@ -40,6 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
             }
+        });
+    });
+
+    // Close mobile menu when clicking a link
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            links.forEach((link) => { link.style.animation = ''; });
         });
     });
 
@@ -64,5 +49,4 @@ document.addEventListener('DOMContentLoaded', () => {
     animatedElements.forEach(element => {
         observer.observe(element);
     });
-
 });
